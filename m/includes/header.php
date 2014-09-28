@@ -6,6 +6,8 @@ session_start(); // Initialize a session
 // Check for a $page_title value:
 if (!isset($page_title)) {
 	$page_title = 'WHITELIGHTNING';
+} else {
+	$page_title = "WL -> " . $page_title;
 }
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

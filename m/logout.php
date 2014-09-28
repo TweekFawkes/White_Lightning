@@ -1,8 +1,8 @@
-<?php
+<?php 
 
 require_once ('includes/config.inc.php'); 
-$page_title = 'WL -> Logout';
-include ('includes/header.html');
+$page_title = 'Logout';
+include ('includes/header.php');
 
 //echo "<h3>You $_SESSION['name']</h3>";
 
@@ -25,5 +25,5 @@ if (!isset($_SESSION['name'])) {
 // Print a customized message:
 echo '<h3>You are now logged out.</h3>';
 
-include ('includes/footer.html');
+include ('includes/footer.php');
 ?>

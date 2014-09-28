@@ -1,8 +1,8 @@
-<?php
+<?php 
 
-require_once ('includes/config.inc.php');
-$page_title = 'WL -> Register';
-include ('includes/header.html');
+require_once ('includes/config.inc.php'); 
+$page_title = 'Register';
+include ('includes/header.php');
 
 if (isset($_POST['submitted'])) { // Handle the form.
 
@@ -65,7 +65,7 @@ if (isset($_POST['submitted'])) { // Handle the form.
 		
 							// Finish the page:
 							echo '<h3>Thank you for registering!</h3>';
-							include ('includes/footer.html'); // Include the HTML footer.
+							include ('includes/footer.php'); // Include the HTML footer.
 							exit(); // Stop the page.
 				
 						} else { // If it did not run OK.
@@ -123,5 +123,5 @@ if (isset($_POST['submitted'])) { // Handle the form.
 </form>
 </center>
 <?php // Include the HTML footer.
-include ('includes/footer.html');
+include ('includes/footer.php');
 ?>
