@@ -1,8 +1,8 @@
-<?php
+<?php 
 
 require_once ('includes/config.inc.php'); 
-$page_title = 'WL -> Create Invites';
-include ('includes/header.html');
+$page_title = 'Create Invites';
+include ('includes/header.php');
 
 // If no user_id session variable exists, redirect the user:
 if (!isset($_SESSION['user_id'])) {
@@ -62,7 +62,7 @@ if (isset($_POST['submitted'])) { // Handle the form.
 							// Finish the page:
 							echo '<h3>Invite Code is: </h3>';
 							echo $icode;
-							include ('includes/footer.html'); // Include the HTML footer.
+							include ('includes/footer.php'); // Include the HTML footer.
 							exit(); // Stop the page.
 						} else { // If it did not run OK.
 							echo '<p class="error">You could generate an invite code due to a system error. We apologize for any inconvenience. 1</p>';
@@ -101,5 +101,5 @@ if (isset($_POST['submitted'])) { // Handle the form.
 </form>
 </center>
 <?php // Include the HTML footer.
-include ('includes/footer.html');
+include ('includes/footer.php');
 ?>

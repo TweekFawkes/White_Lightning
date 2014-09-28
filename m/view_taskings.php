@@ -7,8 +7,8 @@ $db_table_id = "tasking_id";
 
 require_once ('includes/config.inc.php');
 require_once ('../e/config_e.inc.php');
-$page_title = 'WL -> View ' . $page_purpose . 's';
-include ('includes/header.html');
+$page_title = 'View ' . $page_purpose . 's';
+include ('includes/header.php');
 
 // If no user_id session variable exists, redirect the user:
 if (!isset($_SESSION['user_id'])) {
@@ -178,7 +178,7 @@ if (isset($_POST['submitted'])) { // Handle the form.
 
 			// Finish the page:
 			echo '<h3>' . $page_purpose . ' Added!</h3>';
-			//include ('includes/footer.html'); // Include the HTML footer.
+			//include ('includes/footer.php'); // Include the HTML footer.
 			//exit(); // Stop the page.
 			
 			// TODO: now copy files to location... :)
@@ -515,6 +515,6 @@ if ($pages > 1) {
 
 <?php
 // Include the HTML footer.	
-include ('includes/footer.html');
+include ('includes/footer.php');
 mysqli_close($dbc);
 ?>

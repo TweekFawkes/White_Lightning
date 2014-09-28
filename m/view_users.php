@@ -1,8 +1,8 @@
 <?php 
 
 require_once ('includes/config.inc.php'); 
-$page_title = 'WL -> View Users';
-include ('includes/header.html');
+$page_title = 'View Users';
+include ('includes/header.php');
 
 // If no user_id session variable exists, redirect the user:
 if (!isset($_SESSION['user_id']) || $_SESSION['user_level'] != 1) {
@@ -120,5 +120,5 @@ if ($pages > 1) {
 	
 } // End of links section.
 	
-include ('includes/footer.html');
+include ('includes/footer.php');
 ?>

@@ -1,8 +1,8 @@
 <?php 
 
 require_once ('includes/config.inc.php'); 
-$page_title = 'WL -> Change Your Password';
-include ('includes/header.html');
+$page_title = 'Change Your Password';
+include ('includes/header.php');
 
 // If no user_id session variable exists, redirect the user:
 if (!isset($_SESSION['user_id'])) {
@@ -39,7 +39,7 @@ if (isset($_POST['submitted'])) {
 			// Send an email, if desired.
 			echo '<h3>Your password has been changed.</h3>';
 			mysqli_close($dbc); // Close the database connection.
-			include ('includes/footer.html'); // Include the HTML footer.
+			include ('includes/footer.php'); // Include the HTML footer.
 			exit();
 			
 		} else { // If it did not run OK.
@@ -70,5 +70,5 @@ if (isset($_POST['submitted'])) {
 </form>
 </center>
 <?php
-include ('includes/footer.html');
+include ('includes/footer.php');
 ?>

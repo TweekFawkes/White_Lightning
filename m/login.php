@@ -1,8 +1,8 @@
-<?php
+<?php 
 
 require_once ('includes/config.inc.php'); 
-$page_title = 'WL -> Login';
-include ('includes/header.html');
+$page_title = 'Login';
+include ('includes/header.php');
 
 if (isset($_POST['submitted'])) {
 	require_once (MYSQL);
@@ -67,5 +67,5 @@ if (isset($_POST['submitted'])) {
 </center>
 
 <?php // Include the HTML footer.
-include ('includes/footer.html');
+include ('includes/footer.php');
 ?>
