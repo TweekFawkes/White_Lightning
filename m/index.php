@@ -1,19 +1,12 @@
 <?php 
 
-// Include the configuration file:
-require_once ('includes/config.inc.php'); 
-
-// Set the page title and include the HTML header:
-$page_title = 'WL';
-include ('includes/header.html');
+require_once ('includes/config.inc.php');
+include ('includes/header.php');
 
 echo '<center>';
 
 if (isset($_SESSION['name']))
 {
-
-	
-
 	require_once (MYSQL);
 	
 	// Count the number of hits:
@@ -161,6 +154,6 @@ else
 
 </center>
 
-<?php // Include the HTML footer file:
-include ('includes/footer.html');
+<?php // Include the footer:
+include ('includes/footer.php');
 ?>

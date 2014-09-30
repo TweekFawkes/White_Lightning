@@ -1,8 +1,8 @@
 <?php 
 
-require_once ('includes/config.inc.php');
-$page_title = 'WL -> Edit a User';
-include ('includes/header.html');
+require_once ('includes/config.inc.php'); 
+$page_title = 'Edit a User';
+include ('includes/header.php');
 
 if (!isset($_SESSION['user_id']) || $_SESSION['user_level'] != 1) {
 	$url = 'index.php'; // Define the URL.
@@ -21,7 +21,7 @@ if ( (isset($_GET['id'])) && (is_numeric($_GET['id'])) ) { // From view_users.ph
 	$id = $_POST['id'];
 } else { // No valid ID, kill the script.
 	echo '<p class="error">This page has been accessed in error.</p>';
-	include ('includes/footer.html'); 
+	include ('includes/footer.php'); 
 	exit();
 }
 
@@ -107,5 +107,5 @@ if (mysqli_num_rows($r) == 1) { // Valid user ID, show the form.
 
 mysqli_close($dbc);
 		
-include ('includes/footer.html');
+include ('includes/footer.php');
 ?>

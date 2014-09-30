@@ -6,8 +6,8 @@ $db_table_name = "loads";
 $db_table_id = "load_id";
 
 require_once ('includes/config.inc.php'); 
-$page_title = 'WL -> View ' . $page_purpose . 's';
-include ('includes/header.html');
+$page_title = 'View ' . $page_purpose . 's';
+include ('includes/header.php');
 
 // If no user_id session variable exists, redirect the user:
 if (!isset($_SESSION['user_id'])) {
@@ -149,6 +149,6 @@ if ($pages > 1) {
 } // End of links section.
 
 // Include the HTML footer.	
-include ('includes/footer.html');
+include ('includes/footer.php');
 mysqli_close($dbc);
 ?>
