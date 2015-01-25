@@ -1,166 +1,187 @@
-<?php 
-
-// Include the configuration file:
-require_once ('includes/config.inc.php'); 
-
-// Set the page title and include the HTML header:
-$page_title = 'WL';
-include ('includes/header.html');
-
-echo '<center>';
-
-if (isset($_SESSION['name']))
-{
-
+<?php
+	session_start();
+	// Include the configuration file:
+	require_once ('includes/config.inc.php'); 
 	
-
-	require_once (MYSQL);
-	
-	// Count the number of hits:
-	$hits_count = "?";
-	$q = "SELECT COUNT(hit_id) FROM hits";
-	try {
-		$r = @mysqli_query ($dbc, $q);
-		$row = @mysqli_fetch_array ($r, MYSQLI_NUM);
-		$hits_count = $row[0];
-	} catch (Exception $e) {
-		//echo 'Caught exception: ',  $e->getMessage(), "\n";
+	if (isset($_SESSION['name'])) {
+		require_once (MYSQL);	
+		
+		// Count the number of hits:
 		$hits_count = "?";
-	}
+		$q = "SELECT COUNT(hit_id) FROM hits";
+		try {
+			$r = @mysqli_query ($dbc, $q);
+			$row = @mysqli_fetch_array ($r, MYSQLI_NUM);
+			$hits_count = $row[0];
+		} catch (Exception $e) {
+			//echo 'Caught exception: ',  $e->getMessage(), "\n";
+			$hits_count = "?";
+		}
 
-	// Count the number of hits:
-	$throws_count = "?";
-	$q = "SELECT COUNT(throw_id) FROM throws";
-	try {
-		$r = @mysqli_query ($dbc, $q);
-		$row = @mysqli_fetch_array ($r, MYSQLI_NUM);
-		$throws_count = $row[0];
-	} catch (Exception $e) {
-		//echo 'Caught exception: ',  $e->getMessage(), "\n";
+		// Count the number of hits:
 		$throws_count = "?";
-	}
-	
-	// Count the number of hits:
-	$loads_count = "?";
-	$q = "SELECT COUNT(load_id) FROM loads";
-	try {
-		$r = @mysqli_query ($dbc, $q);
-		$row = @mysqli_fetch_array ($r, MYSQLI_NUM);
-		$loads_count = $row[0];
-	} catch (Exception $e) {
-		//echo 'Caught exception: ',  $e->getMessage(), "\n";
+		$q = "SELECT COUNT(throw_id) FROM throws";
+		try {
+			$r = @mysqli_query ($dbc, $q);
+			$row = @mysqli_fetch_array ($r, MYSQLI_NUM);
+			$throws_count = $row[0];
+		} catch (Exception $e) {
+			//echo 'Caught exception: ',  $e->getMessage(), "\n";
+			$throws_count = "?";
+		}
+		
+		// Count the number of hits:
 		$loads_count = "?";
+		$q = "SELECT COUNT(load_id) FROM loads";
+		try {
+			$r = @mysqli_query ($dbc, $q);
+			$row = @mysqli_fetch_array ($r, MYSQLI_NUM);
+			$loads_count = $row[0];
+		} catch (Exception $e) {
+			//echo 'Caught exception: ',  $e->getMessage(), "\n";
+			$loads_count = "?";
+		}
+	}else{
+		header("Location: login.php");
 	}
-	
-	
-	echo '
-	</center>
-	
-	<div id="nifty50">
-	<center>
-	
-	<a href="view_hits.php" title="Hits"><h1>Hits: ' . $hits_count . '</h1></a>
-	<a href="view_throws.php" title="Hits"><h1>Throws: ' . $throws_count . '</h1></a>
-	<a href="view_loads.php" title="Hits"><h1>Loads: ' . $loads_count . '</h1></a>
-	</center>
-	
-	</div>
-	
-	<div id="nifty50r">
-	<center>';
-	
-	// Make the query:
-	$q = 'select COUNT(hit_id) AS count, CONCAT(ua_os_family, " ", ua_os_version) AS os from hits group by os order by count(*) DESC';
-	try {
-		$r = @mysqli_query ($dbc, $q); // Run the query.
-		
-		// Table header:
-		echo '
-		<table align="center" cellspacing="0" cellpadding="5" width="75%">
-		<tr>
-			<td align="left"><b>OS</b></td>
-			<td align="left"><b>Count</b></td>
-		</tr>';
-		
-		// Fetch and print all the records....
-		$bg = '#eeeeee'; 
-		while ($row = mysqli_fetch_array($r, MYSQLI_ASSOC)) {
-			$bg = ($bg=='#eeeeee' ? '#ffffff' : '#eeeeee');
-			echo '
-			<tr bgcolor="' . $bg . '">
-				<td align="left">' . $row['os'] . '</td>
-				<td align="left">' . $row['count'] . '</td>
-			</tr>';
-		} // End of WHILE loop.
-		echo '</table>';
-		mysqli_free_result ($r);
-		//mysqli_close($dbc);		
-	} catch (Exception $e) {
-		//echo 'Caught exception: ',  $e->getMessage(), "\n";
-		//$hits_count = "?";
-		mysqli_free_result ($r);
-	}
-	
-	echo'<h1> - </h1>';
-
-	// Make the query:
-	$q = 'select COUNT(hit_id) AS count, ua_browser_name from hits group by ua_browser_name order by count(*) DESC';
-	try {
-		$r = @mysqli_query ($dbc, $q); // Run the query.
-		
-		// Table header:
-		echo '
-		<table align="center" cellspacing="0" cellpadding="5" width="75%">
-		<tr>
-			<td align="left"><b>Browser</b></td>
-			<td align="left"><b>Count</b></td>	
-		</tr>';
-		
-		// Fetch and print all the records....
-		$bg = '#eeeeee'; 
-		while ($row = mysqli_fetch_array($r, MYSQLI_ASSOC)) {
-			$bg = ($bg=='#eeeeee' ? '#ffffff' : '#eeeeee');
-			echo '
-			<tr bgcolor="' . $bg . '">
-				<td align="left">' . $row['ua_browser_name'] . '</td>
-				<td align="left">' . $row['count'] . '</td>
-			</tr>';
-		} // End of WHILE loop.
-		echo '</table>';
-		mysqli_free_result ($r);
-		//mysqli_close($dbc);		
-	} catch (Exception $e) {
-		//echo 'Caught exception: ',  $e->getMessage(), "\n";
-		//$hits_count = "?";
-		mysqli_free_result ($r);
-	}
-	
-	echo'<h1> - </h1>';
-	
-	
-	
-	
-	
-	echo'
-	</center>
-	</div>
-	';
-	
-}
-else
-{
-	echo '
-	<p><img src="includes/logo_blue.png" alt="WHITELIGHTNING!" height="500" width="500"></p> 
-
-	<p><b>Running Since 1791</b></p>
-	<p></p>
-	<p></p>
-	';
-}
 ?>
 
-</center>
 
-<?php // Include the HTML footer file:
-include ('includes/footer.html');
-?>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<title>WhiteLightning</title>
+
+	<!-- Bootstrap Core CSS -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Custom CSS -->
+	<link href="css/sb-admin.css" rel="stylesheet">
+
+	<!-- Morris Charts CSS -->
+	<link href="css/plugins/morris.css" rel="stylesheet">
+
+	<!-- Custom Fonts -->
+	<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+</head>
+<body>
+	<div id="wrapper">
+		<?php include('outline.php'); ?>
+		<div id="page-wrapper">
+
+			<div class="container-fluid">
+
+				<!-- Page Heading -->
+				<div class="row">
+					<div class="col-lg-12">
+						<h1 class="page-header">
+						<small>Statistics Overview</small>
+						</h1>
+					</div>
+				</div>
+				<!-- /.row -->
+
+				<div class="row">
+					<div class="col-lg-3 col-md-6">
+						<div class="panel panel-green">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-xs-3">
+										<i class="fa fa-tasks fa-5x"></i>
+									</div>
+									<div class="col-xs-9 text-right">
+										<div class="huge"><?php echo $hits_count;?></div>
+										<div>Browser Hits!</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<div class="panel panel-yellow">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-xs-3">
+										<i class="fa fa-shopping-cart fa-5x"></i>
+									</div>
+									<div class="col-xs-9 text-right">
+										<div class="huge"><?php echo $throws_count;?></div>
+										<div>Browsers Enumerated!!</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<div class="panel panel-red">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-xs-3">
+										<i class="fa fa-support fa-5x"></i>
+									</div>
+									<div class="col-xs-9 text-right">
+										<div class="huge"><?php echo $loads_count;?></div>
+										<div>PWN'd Boxes!!!</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /.row -->
+
+				<div class="row">
+					<div class="col-lg-5">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Browser Statistics</h3>
+							</div>
+							<div class="panel-body">
+								<div id="morris-bar-chart"></div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i> OS Statistics</h3>
+							</div>
+							<div class="panel-body">
+								<div id="morris-donut-chart"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- jQuery -->
+	<script src="js/jquery.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="js/bootstrap.min.js"></script>
+
+	<!-- Morris Charts JavaScript -->
+	<script src="js/plugins/morris/raphael.min.js"></script>
+	<script src="js/plugins/morris/morris.min.js"></script>
+	<script src="js/plugins/morris/morris-data.js"></script>
+
+</body>
+</html>
+
+
