@@ -191,6 +191,71 @@
 											</div>
 										</form>
 									</div>
+									<script>
+										function delete_rows(name){
+											var x = confirm("Are you sure you want to remove user " + name);
+											if (x){
+												$.ajax({
+												type: "POST",
+												url: \'includes/settings_delete_rows.php\',
+												data:{action:name},
+												success:function(html) {
+													location.replace("settings.php");
+												}
+												});
+											}
+										}
+										
+										function update_rows(name, session_name){
+											if (name != session_name){
+												$.ajax({
+												type: "POST",
+												url: \'includes/settings_update_rows.php\',
+												data:{action:name},
+												success:function(html) {
+													location.replace("settings.php");
+												}
+												});
+											}else{
+												alert("Cannot change privileges on your account.");
+											}
+										}
+									</script>
+									<div class="col-lg-3">
+										<h2>Users</h2>
+										<div class="table-responsive">
+											<table class="table table-bordered table-hover table-striped">
+												<thead>
+													<tr>
+														<th></th>
+														<th>Username</th>
+														<th>Admin</th>
+														<th></th>
+													</tr>
+												</thead>
+												<tbody>';
+												$q = "SELECT name, user_level, user_id from users";
+												$r = @mysqli_query ($dbc, $q); // Run the query.
+												while ($row = mysqli_fetch_array($r, MYSQLI_ASSOC)) {
+													if ($row['user_level'] == 1){
+														$admin_flag = True;
+														$check_status = 'checked';
+													}else{
+														$admin_flag = False;
+														$check_status = '';
+													}
+													echo '<tr class="warning">
+														  <td><button type="button" name="delete_row" onclick="delete_rows(\''.$row['name'].'\')" class="close" data-dismiss="modal" aria-hidden="true">×</button></td>
+														  <td>'.$row['name'].'</td>
+														  <td><input type="checkbox" name="admin_flag'.$row['user_id'].'" value="'.$admin_flag.'" '.$check_status.'></td>
+														  <td><input type="submit" name="submit" onclick="update_rows(\''.$row['name'].'\',\''.$_SESSION['name'].'\')" value="Update" id="Button" class="btn btn-default"/></td>
+															  </td>
+														  </tr>';
+												}
+												echo '</tbody>
+											</table>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>';} ?>
