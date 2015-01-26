@@ -7,11 +7,10 @@
 define('LIVE', FALSE);
 
 // Admin contact address:
-define('EMAIL', 'InsertRealAddressHere');
+define('EMAIL', 'bhelms85@gmail.com');
 
 // Site URL (base for all redirections):
-define ('BASE_URL', 'http://qu.gs/m/');
-
+define ('BASE_URL', 'http://192.168.30.206/n/');
 
 // Location of the MySQL connection script:
 define ('MYSQL', '/var/mysqli_connect.php');
@@ -39,7 +38,7 @@ function my_error_handler ($e_number, $e_message, $e_file, $e_line, $e_vars) {
 	$message .= "Date/Time: " . date('n-j-Y H:i:s') . "\n<br />";
 	
 	// Append $e_vars to the $message:
-	$message .= "<pre>" . print_r ($e_vars, 1) . "</pre>\n</p>";
+	$message .= "<pre>" . print_r ($e_vars, 1) . "</pre>\n</font>";
 	
 	if (!LIVE) { // Development (print the error).
 	
@@ -70,13 +69,12 @@ set_error_handler ('my_error_handler');
 
 function name_reg ($name) {
 
-	$reg_ex = "/[A-Za-z0-9-].{2,40}/";
+	$reg_ex = "/[A-Za-z0-9-].{4,20}/";
 	
 	if (preg_match ($reg_ex, $name)) {
 		return true;
 	} else {
-		echo '<p class="error">Please enter a valid name!</p>';
-		echo '<p class="error">Names must be a 2 to 40 character string using only lower and upper case letters and numbers.</p>';
+		echo '<font color="red">Please enter a valid name! Names must be a 5 to 20 characters.</font>';
 	} 
 	return false;
 }
@@ -88,8 +86,8 @@ function invite_reg ($name) {
 	if (preg_match ($reg_ex, $name)) {
 		return true;
 	} else {
-		echo '<p class="error">Please enter a invite code!</p>';
-		echo '<p class="error">Invite Codes must be a 32 character string using only lower case letters and numbers.</p>';
+		echo '<font color="red">Please enter a invite code!\n</font><br>';
+		echo '<font color="red">Invite Codes must be a 32 character string using only lower case letters and numbers.</font>';
 	} 
 	return false;
 }
@@ -101,8 +99,8 @@ function link_name_reg ($name) {
 	if (preg_match ($reg_ex, $name)) {
 		return true;
 	} else {
-		echo '<p class="error">Please enter a valid link name!</p>';
-		echo '<p class="error">Link names must be a 2 to 32 character string using only lower and upper case letters and numbers and underscores.</p>';
+		echo '<font color="red">Please enter a valid link name!</font>';
+		echo '<font color="red">Link names must be a 2 to 32 character string using only lower and upper case letters and numbers and underscores.</font>';
 	} 
 	return false;
 }
@@ -119,8 +117,8 @@ function url_reg ($name) {
 	if (preg_match ($reg_ex, $name)) {
 		return true;
 	} else {
-		echo '<p class="error">Please enter a valid link url!</p>';
-		echo '<p class="error">Link url must be a 2 to 1001 character string starting with ' . $reg_ex . ' </p>';
+		echo '<font color="red">Please enter a valid link url!</font>';
+		echo '<font color="red">Link url must be a 2 to 1001 character string starting with ' . $reg_ex . ' </font>';
 	} 
 	return false;
 }
@@ -139,8 +137,8 @@ function ip_reg ($name) {
 	if (preg_match ($reg_ex, $name)) {
 		return true;
 	} else {
-		echo '<p class="error">Please enter a valid IP address!</p>';
-		echo '<p class="error">IP address must be a 2 to 1001 character string and work within this regex: ' . $reg_ex . ' </p>';
+		echo '<font color="red">Please enter a valid IP address!</font>';
+		echo '<font color="red">IP address must be a 2 to 1001 character string and work within this regex: ' . $reg_ex . ' </font>';
 	} 
 	return false;
 }
@@ -150,7 +148,7 @@ function pass_match ($password1, $password2) {
 	if ($password1 == $password2) {
 		return true;
 	} else {
-		echo '<p class="error">Your password did not match the confirmed password!</p>';
+		echo '<font color="red">Your password did not match the confirmed password!</font>';
 	}
 	return false;
 }
@@ -163,8 +161,7 @@ function pass_reg ($password) {
 	if (preg_match ($reg_ex, $password)) {
 		return true;
 	} else {
-		echo '<p class="error">Please enter a valid password!</p>';
-		echo '<p class="error">Passwords must be a 8 to 15 character string with at least one upper case letter , one lower case letter , and one digit.</p>';
+		echo '<font color="red">Please enter a valid password!</font>';
 	} 
 	return false;
 }
