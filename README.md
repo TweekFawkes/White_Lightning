@@ -9,30 +9,30 @@ If there are any features that you want and don't see please submit a ticket
 and we will get to it.  Thanks!
 
 ##Highlighted Features##
-[*] Developed logic to determine the characteristics of the target environment.
-[*] Uses reverse proxying to keep all comms on port 80 (configurable)
-[*] Chooses best exploits to throw based on logic from the target
-[*] Easy to navigate Bootstrap front end
-[*] 100%x100% iFrame redirection (really ingenious Bryce)
-[*] Custom logging with group level permissions
+    [*] Developed logic to determine the characteristics of the target environment.
+    [*] Uses reverse proxying to keep all comms on port 80 (configurable)
+    [*] Chooses best exploits to throw based on logic from the target
+    [*] Easy to navigate Bootstrap front end
+    [*] 100%x100% iFrame redirection (really ingenious Bryce)
+    [*] Custom logging with group level permissions
 
 ##Current Progress##
-[ ] Working on creating precompiled application package
-    -> Convert mysql database passwords to dynamic assignment
-    -> Convert hard coded URLs to dynamic
-    -> Create first log on page to configure admin
-[ ] Expanding target area from Windows 7+ to OSX
-[ ] Email system for alerts
-[ ] Support for SSL
+    [ ] Working on creating precompiled application package
+        -> Convert mysql database passwords to dynamic assignment
+        -> Convert hard coded URLs to dynamic
+        -> Create first log on page to configure admin
+    [ ] Expanding target area from Windows 7+ to OSX
+    [ ] Email system for alerts
+    [ ] Support for SSL
 
 ##Recent Developments##
-[*] Overhauled front end, cleaned up a lot of code.
-[*] New exploits added
-[*] Administration pages
-[*] Ability to remove tasks
-[*] Added robots.txt to web root to prevent crawlers from scraping
-[*] Added License 
-
+    [*] Overhauled front end, cleaned up a lot of code.
+    [*] New exploits added
+    [*] Administration pages
+    [*] Ability to remove tasks
+    [*] Added robots.txt to web root to prevent crawlers from scraping
+    [*] Added License 
+    
 ##Installation##
 Setup has been verified working on January 31, 2015 on KaliLinux 1.0.9.
 
@@ -57,17 +57,17 @@ Then update your software as shown below:
 ##Setup MySQL##
 mysql -u root -p
 
-use mysql;
-update user set password=PASSWORD("mysecretpassword") where User='root';
-flush privileges;
-quit
-
+    use mysql;
+    update user set password=PASSWORD("mysecretpassword") where User='root';
+    flush privileges;
+    quit
+    
 mysql -u root -p
-
-CREATE DATABASE WL;
-CREATE USER 'hobbyhorse'@'localhost' IDENTIFIED BY 'mysecretpassword';
-GRANT ALL ON WL.* TO 'hobbyhorse'@'localhost';
-quit
+    
+    CREATE DATABASE WL;
+    CREATE USER 'hobbyhorse'@'localhost' IDENTIFIED BY 'mysecretpassword';
+    GRANT ALL ON WL.* TO 'hobbyhorse'@'localhost';
+    quit
 
 mysql -u hobbyhorse -p
 
@@ -163,78 +163,62 @@ mysql -u hobbyhorse -p
     ln -s /etc/apache2/sites-available/blog.qu.gs /etc/apache2/sites-enabled/003-blog.qu.gs
     
 vi /etc/apache2/ports.conf
---- START ---
+    #NameVirtualHost *:80
+    NameVirtualHost *
 
-#NameVirtualHost *:80
-NameVirtualHost *
+chown some files
+    chown -R www-data:www-data /var/www
+    chmod -R g+rw /var/www
 
---- END ---
-
-chown -R www-data:www-data /var/www
-chmod -R g+rw /var/www
 vi /etc/apache2/apache2.conf
---- START ---
-
-DefaultType application/x-httpd-php
-
---- END ---
+    DefaultType application/x-httpd-php
 
 ### Domain Change ###
 
 How I setup a new domain for my White Lightning server...
 ---
-cd /var/
-vi mysqli_connect.php
-
---- START ---
-DEFINE ('DB_PASSWORD', 'mysecretpassword');
---- END ---
+vi /var/mysqli_connect.php
+    DEFINE ('DB_PASSWORD', 'mysecretpassword');
 
 vi /root/msgrpc.rb
---- START ---
-load msgrpc ServerHost=qu.gs Pass=abc123
---- END ---
+    load msgrpc ServerHost=qu.gs Pass=abc123
 
-screen -L -S msgrpc
-msfconsole -r msgrpc.rb
---- detach: control + a -> d
-
-touch /var/www/e/debug.log
-chmod 777 //var/www/e/debug.log
+run msf
+    screen -L -S msgrpc
+    msfconsole -r msgrpc.rb
+       [+] detach: control + a -> d
+    touch /var/www/e/debug.log
+    chmod 777 //var/www/e/debug.log
+    
 vi /var/www/e/pam-i.php
+    define ('WL_DOMAIN', 'qu.gs'); /* <?php echo EXPLOIT_DOMAIN ?> */
 
---- START ---
-define ('WL_DOMAIN', 'qu.gs'); /* <?php echo EXPLOIT_DOMAIN ?> */
---- END ---
-
-cd /var/www/m/includes
-vi config.inc.php
-
-define ('BASE_URL', 'http://qu.gs/m/');
+vi /var/www/m/includes/config.inc.php
+    define ('BASE_URL', 'http://qu.gs/m/');
 
 ##NOTES##
 We are still in the process of pulling out all static information and making it
 fully dynamic.  But until we are done here are all the hardcoded locations that
 you will need to manually modify to get things rolling:
 
-/var/www/e/config_e.inc.php     
-    line 3: qu.gs
-    line 6: 10.191.53.90
-    line 8: blog.qu.gs
-/var/www/m/tasking.php
-    line : blog.qu.gs
-/root/msgrpc.rc
-    line 1: 10.191.53.90
-/etc/apache2/sites-available/qu.gs
-    line 2: qu.gs
-/etc/apache2/sites-available/blog.qu.gs
-    line 2: blog.qu.gs
-    line 15: 10.191.53.90
-    line 18: 10.191.53.90
-/etc/apache2/sites-available/
-    file: qu.gs
-    file: blog.qu.gs
-/var/mysql_connect.php
-    line 9: mysecretpassword
-    
+    /var/www/e/config_e.inc.php     
+        line 3: qu.gs
+        line 6: 10.191.53.90
+        line 8: blog.qu.gs
+    /var/www/m/tasking.php
+        line : blog.qu.gs
+    /root/msgrpc.rc
+        line 1: 10.191.53.90
+    /etc/apache2/sites-available/qu.gs
+        line 2: qu.gs
+    /etc/apache2/sites-available/blog.qu.gs
+        line 2: blog.qu.gs
+        line 15: 10.191.53.90
+        line 18: 10.191.53.90
+    /etc/apache2/sites-available/
+        file: qu.gs
+        file: blog.qu.gs
+    /var/mysql_connect.php
+        line 9: mysecretpassword
+        
 ###
