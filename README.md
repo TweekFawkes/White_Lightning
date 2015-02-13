@@ -176,7 +176,7 @@ vi /etc/apache2/apache2.conf
 ### Domain Change ###
 
 How I setup a new domain for my White Lightning server...
----
+
 vi /var/mysqli_connect.php
     DEFINE ('DB_PASSWORD', 'mysecretpassword');
 
