@@ -161,41 +161,41 @@ mysql -u hobbyhorse -p
     ln -s /etc/apache2/mods-available/proxy_http.load /etc/apache2/mods-enabled
     ln -s /etc/apache2/sites-available/qu.gs /etc/apache2/sites-enabled/001-qu.gs
     ln -s /etc/apache2/sites-available/blog.qu.gs /etc/apache2/sites-enabled/003-blog.qu.gs
+
+    vi /etc/apache2/ports.conf
+        #NameVirtualHost *:80
+        NameVirtualHost *
     
-vi /etc/apache2/ports.conf
-    #NameVirtualHost *:80
-    NameVirtualHost *
-
-chown some files
-    chown -R www-data:www-data /var/www
-    chmod -R g+rw /var/www
-
-vi /etc/apache2/apache2.conf
-    DefaultType application/x-httpd-php
-
+    chown some files
+        chown -R www-data:www-data /var/www
+        chmod -R g+rw /var/www
+    
+    vi /etc/apache2/apache2.conf
+        DefaultType application/x-httpd-php
+    
 ### Domain Change ###
 
 How I setup a new domain for my White Lightning server...
 
-vi /var/mysqli_connect.php
-    DEFINE ('DB_PASSWORD', 'mysecretpassword');
-
-vi /root/msgrpc.rb
-    load msgrpc ServerHost=qu.gs Pass=abc123
-
-run msf
-    screen -L -S msgrpc
-    msfconsole -r msgrpc.rb
-       [+] detach: control + a -> d
-    touch /var/www/e/debug.log
-    chmod 777 //var/www/e/debug.log
+    vi /var/mysqli_connect.php
+        DEFINE ('DB_PASSWORD', 'mysecretpassword');
     
-vi /var/www/e/pam-i.php
-    define ('WL_DOMAIN', 'qu.gs'); /* <?php echo EXPLOIT_DOMAIN ?> */
-
-vi /var/www/m/includes/config.inc.php
-    define ('BASE_URL', 'http://qu.gs/m/');
-
+    vi /root/msgrpc.rb
+        load msgrpc ServerHost=qu.gs Pass=abc123
+    
+    run msf
+        screen -L -S msgrpc
+        msfconsole -r msgrpc.rb
+           [+] detach: control + a -> d
+        touch /var/www/e/debug.log
+        chmod 777 //var/www/e/debug.log
+        
+    vi /var/www/e/pam-i.php
+        define ('WL_DOMAIN', 'qu.gs'); /* <?php echo EXPLOIT_DOMAIN ?> */
+    
+    vi /var/www/m/includes/config.inc.php
+        define ('BASE_URL', 'http://qu.gs/m/');
+    
 ##NOTES##
 We are still in the process of pulling out all static information and making it
 fully dynamic.  But until we are done here are all the hardcoded locations that
