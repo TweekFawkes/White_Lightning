@@ -1,6 +1,5 @@
 <?php
-	session_start();
-	require_once ('includes/config.inc.php'); 
+	include('includes/validate.php');
 	
 	if (isset($_SESSION['name'])) {
 		$_SESSION = array(); // Destroy the variables.

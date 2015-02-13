@@ -22,7 +22,7 @@
             padding:9px 15px;
             display:inline-block;
             border-radius:3px 3px 0px 0px;
-            background:#7FB5DA;
+            background:#fff;
             font-size:16px;
             font-weight:600;
             color:#4c4c4c;
@@ -35,7 +35,8 @@
         }
  
     li.active a, li.active a:hover {
-        background:#fff;
+    
+        background:#7FB5DA;
         color:#4c4c4c;
     }
  

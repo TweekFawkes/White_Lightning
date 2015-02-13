@@ -23,18 +23,21 @@ and we will get to it.  Thanks!
     -> Create first log on page to configure admin
 [ ] Expanding target area from Windows 7+ to OSX
 [ ] Email system for alerts
+[ ] Support for SSL
 
 ##Recent Developments##
-[*] Overhauled front end
+[*] Overhauled front end, cleaned up a lot of code.
 [*] New exploits added
 [*] Administration pages
 [*] Ability to remove tasks
 [*] Added robots.txt to web root to prevent crawlers from scraping
+[*] Added License 
 
 ##Installation##
 Setup has been verified working on January 31, 2015 on KaliLinux 1.0.9.
 
 First, copy all directories (etc, root, var) to the root of your KaliLinux, overwritting the originals.
+Make sure you have installed and have running mysql
 
 Then update your software as shown below:
     apt-get install php5-dev php-pear build-essential
@@ -79,28 +82,9 @@ PRIMARY KEY (user_id),
 INDEX login (pass)
 );
 
-INSERT INTO users (name, pass) VALUES ('gator', SHA1('P@ssw0rd!'));
+INSERT INTO users (name, pass) VALUES ('admin', SHA1('P@ssw0rd!'));
 UPDATE users SET user_level=1 WHERE name='gator';
 
-INSERT INTO users (name, pass) VALUES ('bear', SHA1('P@ssw0rd!'));
-
-DROP TABLE users_invites;
-CREATE TABLE users_invites (
-user_invite_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-user_id INT UNSIGNED NOT NULL,
-invite_id INT UNSIGNED NOT NULL,
-PRIMARY KEY (user_invite_id)
-);
-
-DROP TABLE invites;
-CREATE TABLE invites (
-invite_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-invite VARCHAR(32) NOT NULL,
-active TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
-PRIMARY KEY (invite_id)
-);
-
-DROP TABLE hits;
 CREATE TABLE hits (
 hit_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 php_date VARCHAR(8) NOT NULL,
@@ -132,8 +116,6 @@ pd_vlc VARCHAR(20),
 PRIMARY KEY (hit_id)
 );
 
-
-DROP TABLE taskings;
 CREATE TABLE taskings (
 tasking_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 name VARCHAR(200),
@@ -174,14 +156,11 @@ php_http_user_agent VARCHAR(2048),
 PRIMARY KEY (load_id)
 );
 
-show tables;
-
 ##Apache Modifications##
 
 ln -s /etc/apache2/mods-available/proxy.load /etc/apache2/mods-enabled
 ln -s /etc/apache2/mods-available/proxy_http.load /etc/apache2/mods-enabled
 ln -s /etc/apache2/sites-available/qu.gs /etc/apache2/sites-enabled/001-qu.gs
-ln -s /etc/apache2/sites-available/www.qu.gs /etc/apache2/sites-enabled/002-www.qu.gs
 ln -s /etc/apache2/sites-available/blog.qu.gs /etc/apache2/sites-enabled/003-blog.qu.gs
 
 vi /etc/apache2/ports.conf
@@ -231,71 +210,32 @@ define ('WL_DOMAIN', 'qu.gs'); /* <?php echo EXPLOIT_DOMAIN ?> */
 
 cd /var/www/m/includes
 vi config.inc.php
---- START ---
 
 define ('BASE_URL', 'http://qu.gs/m/');
 
---- END ---
+##NOTES##
+We are still in the process of pulling out all static information and making it
+fully dynamic.  But until we are done here are all the hardcoded locations that
+you will need to manually modify to get things rolling:
+
+/var/www/e/config_e.inc.php     
+    line 3: qu.gs
+    line 6: 10.191.53.90
+    line 8: blog.qu.gs
+/var/www/m/tasking.php
+    line : blog.qu.gs
+/root/msgrpc.rc
+    line 1: 10.191.53.90
+/etc/apache2/sites-available/qu.gs
+    line 2: qu.gs
+/etc/apache2/sites-available/blog.qu.gs
+    line 2: blog.qu.gs
+    line 15: 10.191.53.90
+    line 18: 10.191.53.90
+/etc/apache2/sites-available/
+    file: qu.gs
+    file: blog.qu.gs
+/var/mysql_connect.php
+    line 9: mysecretpassword
+    
 ###
-
-
-
-
-
-
-
-##Drones##
-Lair takes a different approach to uploading, parsing, and ingestion of automated tool output (xml). We push this work off onto client side scripts called drones. These drones connect directly to the database. To use them all you have to do is export an environment variable "MONGO_URL". This variable is probably going to be the same you used for installation
-
-
-        export MONGO_URL='mongodb://username:password@ip:27017/lair?ssl=true'
-
-With the environment variable set you will need a project id to import data. You can grab this from the upper right corner of the lair dashboard next to the project name. You can now run any drones.
-
-
-        drone-nmap <pid> /path/to/nmap.xml
-
-You can install the drones to PATH with pip
-
-
-        pip install lairdrone-<version>.tar.gz
-
-##Contributing##
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request 
-
-##Setting up a development environment (OSX)##
-1. Install mongodb 2.6.0 or later preferably with ssl support (`brew install mongodb --with-openssl`)
-2. If using SSL then perform the following to setup certs:
-  * `openssl req –new –x509 –days 365 –nodes –out mongodb-cert.crt –key out mongodb-cert.key`
-  * `cat mongodb-cert.crt mongodb-cert.key > mongodb.pem`
-  * Start Mongo with SSL support via mongod.conf or command line (`mongod —sslMode requireSSL —sslPEMKeyFile mongodb.pem`)
-3. Add a Lair database user:
-  * `mongo lair --ssl`
-  * `db.createUser({user: "lair", "pwd": "yourpassword", roles:["readWrite"]});`
-  * Confirm user authentication: `db.auth("lair", "yourpassword");`
-4. Set the appropriate Lair environment variable...
-  * With SSL:  `export MONGO_URL=mongodb://lair:yourpassword@localhost:27017/lair?ssl=true`
-  * No SSL: `export MONGO_URL=mongodb://lair:password@localhost:27017/lair`
-5. [Download](http://nodejs.org/download/) and install node.js
-6. Install Meteor: `curl https://install.meteor.com | /bin/sh`
-7. Install Meteorite package manager: `sudo npm install -g meteorite`
-8. Fork the Lair project on GitHub and clone the repo locally
-9. Install dependencies: `cd /path/to/lair/app && mrt` (you can kill the mrt process after dependencies are downloaded)
-10. Start Lair:  `cd /path/to/lair/app && meteor`
-11. Browse to http://localhost:3000
-12. Code your changes and submit pull requests!
-
-There are occasional issues and confilicts with Meteor and the Fibers module. If you run into a situation where you cannot start Meteor due to Fibers conflicts, refer to the following for potential fixes:
-* [Error: Cannot find module 'fibers'](http://stackoverflow.com/questions/15851923/cant-install-update-or-run-meteor-after-0-6-release)
-* [Error: fibers.node is missing](http://stackoverflow.com/questions/13327088/meteor-bundle-fails-because-fibers-node-is-missing)
-
-##Contact##
-If you need assistance with installation, usage, or are interested in contributing, please contact Dan Kottmann at any of the below.
-
-Dan Kottmann
-- [@djkottmann](https://twitter.com/djkottmann)
-- djkottmann@gmail.com

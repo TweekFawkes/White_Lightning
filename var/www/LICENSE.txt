@@ -1,0 +1,13 @@
+ Copyright (C) 2015  WhiteLightning
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of this license as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.  Any improvements or additions
+    must be submitted back into the original product.  At no time will
+    the product be sold or be included in a product to be sold without
+    written consent from the originator.  
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
