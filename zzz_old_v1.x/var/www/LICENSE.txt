@@ -1,0 +1,35 @@
+Last Updated: February 13, 2015
+
+Copyright (C) 2015  WhiteLightning
+
+SOFTWARE LICENSE AGREEMENT
+
+
+I. License Overview
+
+I. A. THIS LICENSE AGREEMENT (with the schedules annexed hereto, the "Agreement") is made as of the day when registered on the download server (the "Effective Date") between "Licensee", the user of the software, whether corporate entity, government employee, or educational institute, and the WhiteLightning originator "Licensor".
+
+I. B. If the Licensee does not agree to the terms described within this document, the Licensee is not authorized to install, copy, or otherwise use the Software.
+
+I. C. This program is free software: you can redistribute it and/or modify it under the terms of this license.  Any improvements or additions must be submitted back into the original product. At no time will the product be sold or be included in a product to be sold without written consent from the originator.  
+
+
+II. Scope and Use of License.
+
+II. A. Licensee agrees that the License granted hereunder is limited to use the Software in connection with Licensee’s business in accordance with the terms of this Agreement.
+
+II. B. If Licensee creates, distributes, sells, or otherwise produces a software product used for anti-virus or anti-malware protection then Licensee will not include signatures for Software files or programs within their product.
+
+
+III. Warranties; Disclaimers and Limitation of Liability.
+
+III. A. Disclaimer Overview: This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+III. B. Disclaimer: Except for the limited warranty set forth herein, the software (including all information and intellectual property contained therein) is provided “as-is”, and no warranties of any kind (including but not limited to the implied warranties of merchantability or fitness for a particular purpose, and non-infringement), express, implied or statutory are made. licensor does not warrant the software will meet licensee’s specific requirements or work in comination with any hardware or software products provided by third parties or that the operation of the software will be error-free or uninterrupted. any third party software provided in connection with the terms hereof is provided without warranty from licensor.  if a separate end user license agreement has been provided for such third party software, use of that third party software will be governed by that agreement. For any applicable warranty, please refer to the end user license agreement governing the use of that software.the limited warranty provided to licensee hereunder is the only warranty provided regarding the software and the agreement.
+
+III. C. Limitation of Liability: Licensor (including its officers, directors, shareholders, employees and agents) shall not under any circumstances be liable to any party for indirect, special, consequential, punitive or incidental damages, including without limitation, lost data or lost or anticipatedloss of profits, interruption of business related to this agreement or other damages arising from any cause of action whatsoever, including negligence, strict liability, contract, warranty, other tort or otherwise even if foreseeable or if licensor has been advised of the possibility of such damages and regardless of whether any remedy set forth herein fails its essential purpose.  in addition, licensor’s obligation to pay any damages will in any event be limited to and will not exceed the return of any license fee paid to licensor by licensee for the software which is the basis of the claim(s).  the warranty disclaimer and limitations of liabilitycontained in this paragraph 8 are fundamental elements of the basis of the bargain between licensor and licensee and licensor would not enter into this agreement without such limitations.  except as set forth herein, licensor (including its officers, directors, shareholders, employees and agents) specifically disclaims liability for the fitness, accuracy or completeness of the software and for any and all damage incurred while using the software. licensee assumes all risks as to the suitability of the software.
+
+
+IV. Indemnification.
+
+IV. A. Licensee hereby agrees to defend, indemnify and hold harmless Licensor, its officers, directors, shareholders, employees and agents from and against any and all losses, claims, costs, damages, liabilities and expenses of any nature (including without limitation, attorneys’ fees) incurred, arising out of or related to or in connection with any breach of Licensee’s obligations, representations, duties or warranties contained herein including without limitation any claims arising out of the use of the Software.
